@@ -1,14 +1,23 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, CircularProgress } from '@mui/material'
 
-import { mealsData } from '../../../mealsdata'
 import { MealItem } from './MealItem'
-import { Meal } from '../../../types'
+import { useGetMealListQuery } from '../../../redux/slices/apiSlice'
 
 export function MealList () {
+  const { data: meals, error, isLoading } = useGetMealListQuery()
+
+  if (isLoading) {
+    return <CircularProgress />
+  }
+
+  if (error || !meals) {
+    return <div>Something went wrong</div>
+  }
+
   return (
     <Grid container spacing={3} sx={{ pb: 3 }}>
-      {mealsData.meals.map((meal: Meal) =>
+      {meals.map(meal =>
         <MealItem key={meal.id} meal={meal} />
       )}
     </Grid>

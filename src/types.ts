@@ -1,11 +1,3 @@
-export interface MealsData {
-  labels: Array<{
-    id: string,
-    label: string
-  }>
-  meals: Array<Meal>
-}
-
 export interface Meal {
   id: string
   title: string
