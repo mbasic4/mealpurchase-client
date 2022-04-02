@@ -1,3 +1,8 @@
+export interface MealCategory {
+  id: string,
+  label: string
+}
+
 export interface Meal {
   id: string
   title: string

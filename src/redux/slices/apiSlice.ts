@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Meal } from '../../types'
+import { Meal, MealCategory } from '../../types'
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -8,7 +8,10 @@ export const apiSlice = createApi({
     getMealList: builder.query<Array<Meal>, void>({
       query: () => '/v1/meals',
     }),
+    getMealCategories: builder.query<Array<MealCategory>, void>({
+      query: () => '/v1/meal-categories',
+    }),
   }),
 })
 
-export const { useGetMealListQuery } = apiSlice
+export const { useGetMealListQuery, useGetMealCategoriesQuery } = apiSlice
