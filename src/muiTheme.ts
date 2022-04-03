@@ -24,5 +24,14 @@ export const muiTheme = createTheme({
         },
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            backgroundColor: '#ffcd17',
+          }
+        }
+      }
+    }
   }
 })

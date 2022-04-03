@@ -1,26 +1,64 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Card, CardContent, CardMedia, Chip, Grid, Stack, Typography } from '@mui/material'
 
 import { Add as AddIcon, LocalBar as LocalBarIcon } from '@mui/icons-material'
-import { Drink, Meal } from '../../../types'
+import { Meal } from '../../../types'
+import { useSelector } from 'react-redux'
+import { muiTheme } from '../../../muiTheme'
 
 interface MealItemProps {
   meal: Meal
 }
 
 export function MealItem ({ meal }: MealItemProps) {
+  const [ selectedDrinkId, setSelectedDrinkId ] = useState(null as string | null)
+
+  const handleSelectDrink = (drinkId: string | null) => {
+    if (drinkId === selectedDrinkId) {
+      setSelectedDrinkId(null)
+    } else {
+      setSelectedDrinkId(drinkId)
+    }
+  }
+
+  const currentPassengerId = useSelector(state => state.passenger.currentPassengerId)
+  const disabled = !currentPassengerId
+
+  let mealPrice = meal.price
+  if (selectedDrinkId) {
+    mealPrice = mealPrice + meal.drinks.find(drink => drink.id === selectedDrinkId)!.price
+  }
+
   return (
     <Grid item xs={12} md={6} data-testid='meal-item'>
       <Card sx={{ boxShadow: 3, position: 'relative' }}>
         <Box sx={{ position: 'absolute', top: 0, right: 0 }}>
-          <Button aria-label='Add meal' variant='contained' size='large' sx={{ display: 'flex', alignItems: 'center' }} onClick={e => { console.log(e) }}>
-            <AddIcon />
+          <Button
+            aria-label='Add meal'
+            variant='contained'
+            size='large'
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              '&.Mui-disabled': {
+                backgroundColor: muiTheme.palette.primary.main,
+                color: 'black'
+              }
+            }}
+            onClick={e => { console.log(e) }}
+            disabled={disabled}
+          >
+            {!disabled && <AddIcon />}
             <Box component='span' sx={{ pl: 1 }}>
-              {meal.price} &euro;
+              {mealPrice.toFixed(2)} &euro;
             </Box>
           </Button>
         </Box>
-        <MealCardContent meal={meal} />
+        <MealCardContent
+          meal={meal}
+          selectedDrinkId={selectedDrinkId}
+          setSelectedDrinkId={handleSelectDrink}
+        />
       </Card>
     </Grid>
   )
@@ -29,9 +67,11 @@ export function MealItem ({ meal }: MealItemProps) {
 
 interface MealCardContentProps {
   meal: Meal
+  selectedDrinkId: null | string
+  setSelectedDrinkId: (drinkId: null | string) => void
 }
 
-function MealCardContent ({ meal }: MealCardContentProps) {
+function MealCardContent ({ meal, selectedDrinkId, setSelectedDrinkId }: MealCardContentProps) {
   return (
     <>
       <CardMedia
@@ -42,7 +82,7 @@ function MealCardContent ({ meal }: MealCardContentProps) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="h5">
-          {meal.title}
+          {meal.title} {selectedDrinkId ? `+ drink` : ''}
         </Typography>
         <Typography component='p' sx={labelTextStyle}>
           <b>Starter: </b>{meal.starter}
@@ -52,18 +92,22 @@ function MealCardContent ({ meal }: MealCardContentProps) {
         </Typography>
         <Typography component='p' sx={labelTextStyle}>
           <b>Selected drink: </b>
+          {
+            selectedDrinkId ? meal.drinks.find(drink => drink.id === selectedDrinkId)!.title : ''
+          }
         </Typography>
-        <Stack direction='row' spacing={1}>
-          {meal.drinks.map((drink: Drink) =>
+        <Stack direction='row' spacing={1} sx={{ mt: 1.4 }}>
+          {meal.drinks.map(drink =>
             <Chip
               key={drink.id}
               clickable
-              aria-label="Select drink"
-              variant='outlined'
+              aria-label={`Select drink ${drink.title}`}
               label={drink.title}
-              sx={{ px: '10px', height: '42px' }}
-              onClick={(e: any) => console.log(e)}
+              variant={drink.id === selectedDrinkId ? 'filled' : 'outlined'}
+              color={drink.id === selectedDrinkId ? 'primary' : 'default'}
+              onClick={() => setSelectedDrinkId(drink.id)}
               icon={<LocalBarIcon />}
+              sx={{ px: '10px', height: '42px' }}
             />
           )}
         </Stack>
