@@ -13,5 +13,16 @@ export const muiTheme = createTheme({
     allVariants: {
       color: '#2f4f4f'
     },
+  },
+  components: {
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            backgroundColor: '#ffcd17',
+          },
+        },
+      },
+    },
   }
 })

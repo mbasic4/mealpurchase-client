@@ -2,15 +2,21 @@ import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 
 import { apiSlice } from './slices/apiSlice'
+import { passengerSlice } from './slices/passengerSlice'
 
-export const store = configureStore({
-  reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-  },
+export const initializeStore = () => {
+  return configureStore({
+    reducer: {
+      [apiSlice.reducerPath]: apiSlice.reducer,
+      passenger: passengerSlice.reducer
+    },
+  
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(apiSlice.middleware),
+  })
+}
 
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
-})
+export const store = initializeStore()
 
 export type RootState = ReturnType<typeof store.getState>
 
