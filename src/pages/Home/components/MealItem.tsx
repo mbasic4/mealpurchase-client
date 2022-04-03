@@ -10,7 +10,7 @@ interface MealItemProps {
 
 export function MealItem ({ meal }: MealItemProps) {
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item xs={12} md={6} data-testid='meal-item'>
       <Card sx={{ boxShadow: 3, position: 'relative' }}>
         <Box sx={{ position: 'absolute', top: 0, right: 0 }}>
           <Button aria-label='Add meal' variant='contained' size='large' sx={{ display: 'flex', alignItems: 'center' }} onClick={e => { console.log(e) }}>
