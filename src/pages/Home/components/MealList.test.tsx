@@ -6,8 +6,8 @@ import '@testing-library/jest-dom'
 
 import { MealList } from './MealList'
 import { Provider } from 'react-redux'
-import { store } from '../../../redux/store'
 import { mealsData } from '../../../mealsdata'
+import { initializeStore } from '../../../redux/store'
 
 const meals = mealsData.meals
 
@@ -23,6 +23,8 @@ afterAll(() => server.close())
  
 describe('MealList', () => {
   test(`When a current meal category prop is 'all' then all meals should be rendered`, async () => {
+    const store = initializeStore()
+
     render(
       <Provider store={store}>
        <MealList currentMealCategory={'all'} />
@@ -35,6 +37,8 @@ describe('MealList', () => {
   })
 
   test(`When a current meal category prop is provided, and is not equal to 'all' then only meals of that category should be rendered`, async () => {
+    const store = initializeStore()
+
     const { queryByAltText } = render(
       <Provider store={store}>
        <MealList currentMealCategory={'chicken'} />
