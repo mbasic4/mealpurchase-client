@@ -60,8 +60,11 @@ export const passengerSlice = createSlice({
     },
     setMealForCurrentPassenger: (state, action: PayloadAction<MealPayload>) => {
       state.passengers.find(passenger => passenger.id === state.currentPassengerId)!.meal = action.payload
+    },
+    removeMealForPassenger: (state, action: PayloadAction<number>) => {
+      state.passengers.find(passenger => passenger.id === action.payload)!.meal = null
     }
   }
 })
 
-export const { setCurrentPassenger, setMealForCurrentPassenger } = passengerSlice.actions
+export const { setCurrentPassenger, setMealForCurrentPassenger, removeMealForPassenger } = passengerSlice.actions

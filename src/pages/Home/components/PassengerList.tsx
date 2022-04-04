@@ -27,7 +27,7 @@ export function PassengerList () {
       </Typography>
       <Stack>
         <List component="div" aria-label="Passenger list">
-          {passengers.map((passenger: any) =>
+          {passengers.map(passenger =>
             <PassengerListItem
               key={passenger.id}
               passenger={passenger}

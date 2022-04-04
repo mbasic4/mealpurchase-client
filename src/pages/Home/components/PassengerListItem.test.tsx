@@ -38,7 +38,7 @@ describe('PassengerListItem', () => {
 
     fireEvent.click(screen.getByText(`seat no. ${passengers[0].seat}`, { exact: false }))
 
-    expect(dispatchSpy).toHaveBeenLastCalledWith(setCurrentPassenger(1))
+    expect(dispatchSpy).toHaveBeenLastCalledWith(setCurrentPassenger(passengers[0].id))
 
     dispatchSpy.mockRestore()
   })
@@ -58,7 +58,7 @@ describe('PassengerListItem', () => {
     expect(screen.getByText(passenger, { exact: false }).parentElement?.parentElement).toHaveTextContent('No meal selected')
   })
 
-  test('Given a meal is selected for current user then selected meal is instantly visible', () => {
+  test('Given a meal is selected for current passenger then selected meal is instantly visible', () => {
     const store = initializeStore()
     store.dispatch(setCurrentPassenger(1))
     store.dispatch(setMealForCurrentPassenger({ id: mealsData.meals[2].id, drinkId: null }))
@@ -74,7 +74,7 @@ describe('PassengerListItem', () => {
     expect(screen.getByText(mealsData.meals[2].title)).toBeVisible()
   })
 
-  test('Given a meal is selected for current user then selected meal info is toggleable', () => {
+  test('Given a meal is selected for current passenger then selected meal info is toggleable', () => {
     const store = initializeStore()
     store.dispatch(setCurrentPassenger(1))
     store.dispatch(setMealForCurrentPassenger({ id: mealsData.meals[2].id, drinkId: null }))
