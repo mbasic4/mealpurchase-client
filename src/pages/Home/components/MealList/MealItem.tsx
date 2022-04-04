@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Box, Button, Card, CardContent, CardMedia, Chip, Grid, Stack, Typography } from '@mui/material'
 
 import { LocalBar as LocalBarIcon, ShoppingCartCheckout as ShoppingCartCheckoutIcon } from '@mui/icons-material'
-import { Meal } from '../../../types'
+import { Meal } from '../../../../types'
 import { useDispatch, useSelector } from 'react-redux'
-import { muiTheme } from '../../../muiTheme'
-import { setMealForCurrentPassenger } from '../../../redux/slices/passengerSlice'
+import { muiTheme } from '../../../../muiTheme'
+import { setMealForCurrentPassenger } from '../../../../redux/slices/passengerSlice'
 
 interface MealItemProps {
   meal: Meal

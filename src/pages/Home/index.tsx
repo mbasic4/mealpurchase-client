@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { CircularProgress, Container, Grid } from '@mui/material'
+import React, { useState } from 'react'
+import { Container, Grid } from '@mui/material'
 
-import { MealList } from './components/MealList';
-import { PassengerListContainer } from './components/PassengerListContainer';
+import { MealList } from './components/MealList/MealList';
+import { PassengerListContainer } from './components/PassengerList/PassengerListContainer';
 import { TagSelect } from '../../components/TagSelect';
 import { useMealCategoriesQuery } from '../../redux/slices/apiSlice';
+import { Loader } from '../../components/Loader';
+import { ErrorFallback } from '../../components/ErrorFallback';
 
 
 export function HomePage () {
@@ -13,11 +15,11 @@ export function HomePage () {
   const { data: mealCategories, error, isLoading } = useMealCategoriesQuery()
 
   if (isLoading) {
-    return <CircularProgress />
+    return <Loader />
   }
 
   if (error || !mealCategories) {
-    return <div>Something went wrong</div>
+    return <ErrorFallback />
   }
 
   return (

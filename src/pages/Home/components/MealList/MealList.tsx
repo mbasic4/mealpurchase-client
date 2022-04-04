@@ -1,9 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Grid, CircularProgress, Pagination } from '@mui/material'
+import { Box, Grid, Pagination } from '@mui/material'
 
 import { MealItem } from './MealItem'
-import { useMealListQuery } from '../../../redux/slices/apiSlice'
-import { Box } from '@mui/system'
+import { useMealListQuery } from '../../../../redux/slices/apiSlice'
+import { Loader } from '../../../../components/Loader'
+import { ErrorFallback } from '../../../../components/ErrorFallback'
 
 interface MealListProps {
   currentMealCategory: string
@@ -26,11 +27,11 @@ export function MealList ({ currentMealCategory }: MealListProps) {
   const { data, error, isLoading } = useMealListQuery({ limit: LIMIT, page, mealCategoryId })
 
   if (isLoading) {
-    return <CircularProgress />
+    return <Loader />
   }
 
   if (error || !data) {
-    return <div>Something went wrong</div>
+    return <ErrorFallback />
   }
 
   const { data: meals, totalCount } = data

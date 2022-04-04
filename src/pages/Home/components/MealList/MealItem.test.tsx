@@ -2,9 +2,9 @@ import { render, fireEvent, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import { MealItem } from './MealItem'
-import { initializeStore } from '../../../redux/store'
+import { initializeStore } from '../../../../redux/store'
 import { Provider } from 'react-redux'
-import { setCurrentPassenger, setMealForCurrentPassenger } from '../../../redux/slices/passengerSlice'
+import { setCurrentPassenger, setMealForCurrentPassenger } from '../../../../redux/slices/passengerSlice'
  
 describe('MealItem', () => {
   const meal = {

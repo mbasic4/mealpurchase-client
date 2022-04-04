@@ -1,10 +1,13 @@
 import React from 'react'
 import { FlightTakeoff as FlightTakeOffIcon } from '@mui/icons-material'
-import { CircularProgress, List, Stack, Typography } from '@mui/material'
+import { List, Stack, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
-import { useMealListQuery } from '../../../redux/slices/apiSlice'
+
+import { useMealListQuery } from '../../../../redux/slices/apiSlice'
 import { PassengerListItem } from './PassengerListItem'
-import { calculateAndFormatTotalPrice } from './utils'
+import { calculateAndFormatTotalPrice } from '../utils'
+import { Loader } from '../../../../components/Loader'
+import { ErrorFallback } from '../../../../components/ErrorFallback'
 
 export function PassengerList () {
   const currentPassengerId = useSelector(state => state.passenger.currentPassengerId)
@@ -15,11 +18,11 @@ export function PassengerList () {
   const { data, error, isFetching } = useMealListQuery({ mealIds }, { skip: !mealIds.length })
 
   if (isFetching) {
-    return <CircularProgress />
+    return <Loader />
   }
 
   if (error) {
-    return <div>Something went wrong</div>
+    return <ErrorFallback />
   }
 
   const meals = data ? data.data : []

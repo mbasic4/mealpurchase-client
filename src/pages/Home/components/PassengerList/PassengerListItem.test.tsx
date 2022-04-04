@@ -3,9 +3,9 @@ import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 
 import { PassengerListItem } from './PassengerListItem'
-import { initializeStore } from '../../../redux/store'
-import { fixture } from '../../../fixture'
-import { setCurrentPassenger, setMealForCurrentPassenger } from '../../../redux/slices/passengerSlice'
+import { initializeStore } from '../../../../redux/store'
+import { fixture } from '../../../../fixture'
+import { setCurrentPassenger, setMealForCurrentPassenger } from '../../../../redux/slices/passengerSlice'
 
 describe('PassengerListItem', () => {
   test('When item from passenger list is clicked then it should be selected', () => {

@@ -6,10 +6,10 @@ import {
 import { Box, Button, ListItemButton, Paper, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 
-import { Passenger, removeMealForPassenger, setCurrentPassenger } from '../../../redux/slices/passengerSlice'
-import { muiTheme } from '../../../muiTheme'
-import { Meal } from '../../../types'
-import { calculateAndFormatPriceForSingleMeal, getSelectedMealAndDrink } from './utils'
+import { Passenger, removeMealForPassenger, setCurrentPassenger } from '../../../../redux/slices/passengerSlice'
+import { muiTheme } from '../../../../muiTheme'
+import { Meal } from '../../../../types'
+import { calculateAndFormatPriceForSingleMeal, getSelectedMealAndDrink } from '../utils'
 
 interface PassengerListItemProps {
   passenger: Passenger,

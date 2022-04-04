@@ -3,9 +3,9 @@ import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 
 import { PassengerList } from './PassengerList'
-import { initializeStore } from '../../../redux/store'
-import { fixture } from '../../../fixture'
-import { removeMealForPassenger, setCurrentPassenger, setMealForCurrentPassenger } from '../../../redux/slices/passengerSlice'
+import { initializeStore } from '../../../../redux/store'
+import { fixture } from '../../../../fixture'
+import { removeMealForPassenger, setCurrentPassenger, setMealForCurrentPassenger } from '../../../../redux/slices/passengerSlice'
 
 describe('PassengerList', () => {
   test('Given a remove meal button is clicked for a passenger with selected meal then meal should no longer be visible', async () => {
