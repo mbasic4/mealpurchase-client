@@ -4,13 +4,13 @@ import { CircularProgress, Container, Grid } from '@mui/material'
 import { MealList } from './components/MealList';
 import { PassengerListContainer } from './components/PassengerListContainer';
 import { TagSelect } from '../../components/TagSelect';
-import { useGetMealCategoriesQuery } from '../../redux/slices/apiSlice';
+import { useMealCategoriesQuery } from '../../redux/slices/apiSlice';
 
 
 export function HomePage () {
   const [ currentMealCategory, setCurrentMealCategory ] = useState('all')
 
-  const { data: mealCategories, error, isLoading } = useGetMealCategoriesQuery()
+  const { data: mealCategories, error, isLoading } = useMealCategoriesQuery()
 
   if (isLoading) {
     return <CircularProgress />

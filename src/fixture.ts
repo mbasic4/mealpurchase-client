@@ -1,4 +1,4 @@
-export const mealsData = {
+export const fixture = {
   "labels": [
     {
       "id": "pork",

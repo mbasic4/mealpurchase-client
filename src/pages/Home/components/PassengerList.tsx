@@ -2,7 +2,7 @@ import React from 'react'
 import { FlightTakeoff as FlightTakeOffIcon } from '@mui/icons-material'
 import { CircularProgress, List, Stack, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
-import { useGetMealListQuery } from '../../../redux/slices/apiSlice'
+import { useMealListQuery } from '../../../redux/slices/apiSlice'
 import { PassengerListItem } from './PassengerListItem'
 import { calculateAndFormatTotalPrice } from './utils'
 
@@ -10,15 +10,19 @@ export function PassengerList () {
   const currentPassengerId = useSelector(state => state.passenger.currentPassengerId)
   const passengers = useSelector(state => state.passenger.passengers)
 
-  const { data: meals, error, isLoading } = useGetMealListQuery()
+  const mealIds = passengers.filter(passenger => passenger.meal).map(passenger => passenger.meal?.id)
 
-  if (isLoading) {
+  const { data, error, isFetching } = useMealListQuery({ mealIds }, { skip: !mealIds.length })
+
+  if (isFetching) {
     return <CircularProgress />
   }
 
-  if (error || !meals) {
+  if (error) {
     return <div>Something went wrong</div>
   }
+
+  const meals = data ? data.data : []
 
   return (
     <>

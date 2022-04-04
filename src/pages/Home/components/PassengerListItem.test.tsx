@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 
 import { PassengerListItem } from './PassengerListItem'
 import { initializeStore } from '../../../redux/store'
-import { mealsData } from '../../../mealsdata'
+import { fixture } from '../../../fixture'
 import { setCurrentPassenger, setMealForCurrentPassenger } from '../../../redux/slices/passengerSlice'
 
 describe('PassengerListItem', () => {
@@ -14,7 +14,7 @@ describe('PassengerListItem', () => {
 
     render(
       <Provider store={store}>
-        <PassengerListItem isSelected={true} meals={mealsData.meals} passenger={passengers[0]} />
+        <PassengerListItem isSelected={true} meals={fixture.meals} passenger={passengers[0]} />
       </Provider>
     )
 
@@ -32,7 +32,7 @@ describe('PassengerListItem', () => {
 
     render(
       <Provider store={store}>
-        <PassengerListItem isSelected={true} meals={mealsData.meals} passenger={passengers[0]} />
+        <PassengerListItem isSelected={true} meals={fixture.meals} passenger={passengers[0]} />
       </Provider>
     )
 
@@ -49,7 +49,7 @@ describe('PassengerListItem', () => {
   
     render(
       <Provider store={store}>
-        <PassengerListItem isSelected={true} meals={mealsData.meals} passenger={passengers[0]} />
+        <PassengerListItem isSelected={true} meals={fixture.meals} passenger={passengers[0]} />
       </Provider>
     )
 
@@ -61,28 +61,28 @@ describe('PassengerListItem', () => {
   test('Given a meal is selected for current passenger then selected meal is instantly visible', () => {
     const store = initializeStore()
     store.dispatch(setCurrentPassenger(1))
-    store.dispatch(setMealForCurrentPassenger({ id: mealsData.meals[2].id, drinkId: null }))
+    store.dispatch(setMealForCurrentPassenger({ id: fixture.meals[2].id, drinkId: null }))
     const passengers = store.getState().passenger.passengers
   
     render(
       <Provider store={store}>
-        <PassengerListItem isSelected={true} meals={mealsData.meals} passenger={passengers[0]} />
+        <PassengerListItem isSelected={true} meals={fixture.meals} passenger={passengers[0]} />
       </Provider>
     )
 
     expect(screen.getByTestId('ExpandLessIcon')).toBeVisible()
-    expect(screen.getByText(mealsData.meals[2].title)).toBeVisible()
+    expect(screen.getByText(fixture.meals[2].title)).toBeVisible()
   })
 
   test('Given a meal is selected for current passenger then selected meal info is toggleable', () => {
     const store = initializeStore()
     store.dispatch(setCurrentPassenger(1))
-    store.dispatch(setMealForCurrentPassenger({ id: mealsData.meals[2].id, drinkId: null }))
+    store.dispatch(setMealForCurrentPassenger({ id: fixture.meals[2].id, drinkId: null }))
     const passengers = store.getState().passenger.passengers
   
     render(
       <Provider store={store}>
-        <PassengerListItem isSelected={true} meals={mealsData.meals} passenger={passengers[0]} />
+        <PassengerListItem isSelected={true} meals={fixture.meals} passenger={passengers[0]} />
       </Provider>
     )
 
