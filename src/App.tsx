@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider } from '@mui/material'
+import { Container, ThemeProvider } from '@mui/material'
 import { Routes, Route } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
@@ -12,14 +12,16 @@ import { ErrorFallback } from './components/ErrorFallback';
 function App() {
   return (
     <ThemeProvider theme={muiTheme}>
-      <ErrorBoundary
-        FallbackComponent={ErrorFallback}
-      >
         <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </ErrorBoundary>
+        <Container sx={{ height: 'calc(100vh - 64px)' }}>
+          <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+          >
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+            </Routes>
+          </ErrorBoundary>
+        </Container>
     </ThemeProvider>
   );
 }
