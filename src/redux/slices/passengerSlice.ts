@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface Passenger {
+interface PassengerMeal {
+  id: string
+  drinkId: string | null
+}
+
+export interface Passenger {
   id: number
   age: number
   seat: number
-  meals: Array<any>
+  meal: PassengerMeal | null
 }
 
 const initialState = {
@@ -14,21 +19,32 @@ const initialState = {
       id: 1,
       age: 54,
       seat: 23,
-      meals: []
+      meal: null as null | PassengerMeal
     },
     {
       id: 2,
       age: 12,
-      seat: 22,
-      meals: []
+      seat: 24,
+      meal: null as null | PassengerMeal
     },
     {
       id: 3,
-      age:32,
-      seat:77,
-      meals: []
+      age: 32,
+      seat: 54,
+      meal: null as null | PassengerMeal
+    },
+    {
+      id: 4,
+      age: 60,
+      seat: 77,
+      meal: null as null | PassengerMeal
     }
   ] as (Array<Passenger>)
+}
+
+interface MealPayload {
+  id: string
+  drinkId: string | null
 }
 
 export const passengerSlice = createSlice({
@@ -41,8 +57,11 @@ export const passengerSlice = createSlice({
         return
       }
       state.currentPassengerId = action.payload
+    },
+    setMealForCurrentPassenger: (state, action: PayloadAction<MealPayload>) => {
+      state.passengers.find(passenger => passenger.id === state.currentPassengerId)!.meal = action.payload
     }
   }
 })
 
-export const { setCurrentPassenger } = passengerSlice.actions
+export const { setCurrentPassenger, setMealForCurrentPassenger } = passengerSlice.actions

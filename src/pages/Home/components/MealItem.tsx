@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Box, Button, Card, CardContent, CardMedia, Chip, Grid, Stack, Typography } from '@mui/material'
 
-import { Add as AddIcon, LocalBar as LocalBarIcon } from '@mui/icons-material'
+import { LocalBar as LocalBarIcon, ShoppingCartCheckout as ShoppingCartCheckoutIcon } from '@mui/icons-material'
 import { Meal } from '../../../types'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { muiTheme } from '../../../muiTheme'
+import { setMealForCurrentPassenger } from '../../../redux/slices/passengerSlice'
 
 interface MealItemProps {
   meal: Meal
@@ -12,6 +13,7 @@ interface MealItemProps {
 
 export function MealItem ({ meal }: MealItemProps) {
   const [ selectedDrinkId, setSelectedDrinkId ] = useState(null as string | null)
+  const dispatch = useDispatch()
 
   const handleSelectDrink = (drinkId: string | null) => {
     if (drinkId === selectedDrinkId) {
@@ -21,20 +23,29 @@ export function MealItem ({ meal }: MealItemProps) {
     }
   }
 
-  const currentPassengerId = useSelector(state => state.passenger.currentPassengerId)
-  const disabled = !currentPassengerId
-
   let mealPrice = meal.price
   if (selectedDrinkId) {
     mealPrice = mealPrice + meal.drinks.find(drink => drink.id === selectedDrinkId)!.price
   }
+
+  const handleSelectMeal = () => {
+    let mealPayload = {
+      id: meal.id,
+      drinkId: selectedDrinkId,
+    }
+
+    dispatch(setMealForCurrentPassenger(mealPayload))
+  }
+
+  const currentPassengerId = useSelector(state => state.passenger.currentPassengerId)
+  const disabled = !currentPassengerId
 
   return (
     <Grid item xs={12} md={6} data-testid='meal-item'>
       <Card sx={{ boxShadow: 3, position: 'relative' }}>
         <Box sx={{ position: 'absolute', top: 0, right: 0 }}>
           <Button
-            aria-label='Add meal'
+            aria-label='Select meal'
             variant='contained'
             size='large'
             sx={{
@@ -45,10 +56,10 @@ export function MealItem ({ meal }: MealItemProps) {
                 color: 'black'
               }
             }}
-            onClick={e => { console.log(e) }}
+            onClick={handleSelectMeal}
             disabled={disabled}
           >
-            {!disabled && <AddIcon />}
+            {!disabled && <ShoppingCartCheckoutIcon />}
             <Box component='span' sx={{ pl: 1 }}>
               {mealPrice.toFixed(2)} &euro;
             </Box>
